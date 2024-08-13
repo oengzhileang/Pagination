@@ -2,8 +2,8 @@ import React from 'react'
 
 const notFound = () => {
   return (
-    <div>
-      Not Dound
+    <div className='flex justify-center items-center text-red-500 text-5xl font-bold '>
+      Not Found Product Detail
     </div>
   )
 }

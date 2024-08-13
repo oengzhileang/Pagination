@@ -11,21 +11,17 @@ interface ProductsProps {
   thumbnail: string;
   total: number;
 }
-const getDatabyID = async ({
-  productId,
-}: {
-  productId: string;
-}): Promise<ProductsProps> => {
-    const response = await fetch ('https://dummyjson.com/products')
-    if (!response.ok) {
-        if (response.status === 404) {
-          notFound();
-        } else {
-          throw new Error(`Failed to fetch data for product ID: ${productId}`);
-        }
-      }
-    const data : ProductsProps = await response.json()
-    return data;
+const getDatabyID = async (productId: string): Promise<ProductsProps> => {
+  const response = await fetch("https://dummyjson.com/products/"+productId);
+  if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
+    } else {
+      throw new Error(`Failed to fetch data for product ID: ${productId}`);
+    }
+  }
+  const data: ProductsProps = await response.json();
+  return data;
 };
 
 export default getDatabyID;

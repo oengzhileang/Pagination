@@ -2,6 +2,7 @@ import React from "react";
 import getData from "../products/getData";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
+import Link from "next/link";
 interface ProductsProps {
   id: string;
   title: string;
@@ -21,7 +22,9 @@ const ProductList = async ({ page }: { page: number }) => {
       <div className="grid grid-cols-4 max-w-[1200] w-full gap-5">
         {products.map((item: ProductsProps) => (
           <div key={item.id}>
-            <ProductCard item={item} />
+            <Link href={`products/${item.id}`}>
+              <ProductCard item={item} />
+            </Link>
           </div>
         ))}
       </div>

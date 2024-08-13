@@ -8,7 +8,7 @@ const Pagination = ({
   totalPage: number;
   currentPage: number;
 }) => {
-  const page = parseInt(currentPage.toString(),10)
+  const page = parseInt(currentPage.toString(),10) 
   return (
     <>
       <nav aria-label="Page navigation example max-h-[100px] h-full">
