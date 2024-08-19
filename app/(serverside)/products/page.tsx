@@ -1,13 +1,17 @@
-import ProductList from "../components/ProductList";
+import ProductList from "../../components/organisms/ProductList";
+import { Suspense } from "react";
+import Skeleton from "../../components/organisms/Skeleton";
 type SearchParams = {
   page: number;
 };
 
 const Products = async ({ searchParams }: { searchParams: SearchParams }) => {
-  const currentPage = searchParams?.page || 1
+  const currentPage = searchParams?.page || 1;
   return (
     <>
-      <ProductList page={currentPage} />
+      <Suspense fallback={<Skeleton />}>
+        <ProductList page={currentPage} />
+      </Suspense>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import getData from "../products/getData";
+import getData from "../../(serverside)/products/getData";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
 import Link from "next/link";

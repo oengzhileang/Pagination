@@ -12,7 +12,9 @@ interface ProductsProps {
   total: number;
 }
 const getDatabyID = async (productId: string): Promise<ProductsProps> => {
-  const response = await fetch("https://dummyjson.com/products/"+productId);
+  const response = await fetch("https://dummyjson.com/products/"+productId ,{
+    cache: "no-store",
+  });
   if (!response.ok) {
     if (response.status === 404) {
       notFound();
