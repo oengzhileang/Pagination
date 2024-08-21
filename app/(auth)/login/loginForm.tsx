@@ -38,6 +38,9 @@ const LoginForm : React.FC <LoginFormProps>  = ({onSubmit}) => {
             onSubmit({username , password})
         }
     }
+    const handleClick = () =>{
+        return "Everything is perfect"
+    }
   return (
     <>
         <form action="" onSubmit={handleSubmit}>
