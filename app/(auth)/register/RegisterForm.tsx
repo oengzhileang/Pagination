@@ -8,14 +8,18 @@ interface Inputs{
   cfpassword: string;
 }
 const RegisterForm = () => {
-  
+  const handleSubmit = (e:React.FormEvent) => {
+    e.preventDefault()
+    console.log("Hello");
+    
+  }
   return (
     <>
-      <form action="">
+      <form action="" onSubmit={handleSubmit}>
         <TextField type='email' placeholder='Enter your email' label='email'/>
         <TextField type='password' placeholder='Enter your password' label='password'/>
         <TextField type='password' placeholder='Enter your comfirm password' label='comfirm password'/>
-        <Button>
+        <Button type='submit'>
           Register
         </Button>
       </form>
