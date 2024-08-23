@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import LoginForm from "./loginForm";
-import { expect, userEvent, within } from "@storybook/test";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { fn } from "@storybook/test";
 const meta: Meta<typeof LoginForm> = {
   title: "app/auth/login",
@@ -24,7 +24,7 @@ export const RequireFields: Story = {
   },
 };
 
-export const FilledForm: Story = {
+export const WithInteraction: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const usernameInput = canvas.getByPlaceholderText("Enter your username");
@@ -39,3 +39,42 @@ export const FilledForm: Story = {
     await userEvent.click(submitButton);
   },
 };
+export const WithInteractionGroup : Story = {
+  play: async ({ canvasElement , step }) => {
+    const canvas = within(canvasElement);
+    await step ("Enter username and password " , async ( ) => {
+      const usernameInput = canvas.getByPlaceholderText("Enter your username")
+      await userEvent.type(usernameInput,"oengzhileang",{
+        delay: 100
+      })
+      const passwordInput =  canvas.getByPlaceholderText("Enter your password")
+      await userEvent.type(passwordInput,"1234567890",{
+        delay: 100
+      })
+    })
+    await step ("Submit form" , async() =>{
+      const submitButton = canvas.getByRole("button")
+      await userEvent.click(submitButton)
+    })
+  }
+}
+export const WithInteractionAssert : Story = {
+  play: async ({args, canvasElement , step }) => {
+    const canvas = within(canvasElement);
+    await step ("Enter username and password " , async ( ) => {
+      const usernameInput = canvas.getByPlaceholderText("Enter your username")
+      await userEvent.type(usernameInput,"oengzhileang",{
+        delay: 100
+      })
+      const passwordInput =  canvas.getByPlaceholderText("Enter your password")
+      await userEvent.type(passwordInput,"1234567890",{
+        delay: 100
+      })
+    })
+    await step ("Submit form" , async() =>{
+      const submitButton = canvas.getByRole("button")
+      await userEvent.click(submitButton)
+    })
+    await waitFor(()=> expect(args.onSubmit).toHaveBeenCalled())
+  }
+}
