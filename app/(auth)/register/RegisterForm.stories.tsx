@@ -7,32 +7,72 @@ import { fn } from "@storybook/test";
 const meta: Meta<typeof RegisterForm> = {
   title: "app/auth/register",
   component: RegisterForm,
-  args:{
-    onsubmit: fn()
-  }
+  args: {
+    onRegister: fn(),
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof RegisterForm>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    onRegister: (data) => {
+      console.log("Register user", data);
+    },
+  },
+};
+export const RegisterSuccess: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const emailInput = canvas.getByPlaceholderText("Enter your email");
+    await userEvent.type(emailInput, "oengzhileang.dev@gmail.com", {
+      delay: 100,
+    });
+    const passwordInput = canvas.getByPlaceholderText("Enter your password");
+    await userEvent.type(passwordInput, "1234567890", {
+      delay: 100,
+    });
+    const cfpasswordInput = canvas.getByPlaceholderText(
+      "Enter your comfirm password"
+    );
+    await userEvent.type(cfpasswordInput, "1234567890", {
+      delay: 100,
+    });
+    const submitButton = canvas.getByRole("button");
+    await userEvent.click(submitButton);
+  },
+  args: {
+    onRegister: (data) => {
+      console.log("Register user", data);
+    },
+  },
+};
 
-export const LoginSuccess : Story = {
-  play : async ({canvasElement}) => {
-    const canvas = within(canvasElement)
-    const emailInput = canvas.getByPlaceholderText("Enter your email")
-    await userEvent.type(emailInput,"oengzhileang.dev@gmail.com",{
-      delay:100
+export const RegisterWithExistingUser: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const emailInput = canvas.getByPlaceholderText("Enter your email");
+    await userEvent.type(emailInput, "oengzhileang.dev@gmail.com", {
+      delay: 100,
     });
-    const passwordInput = canvas.getByPlaceholderText("Enter your password")
-    await userEvent.type(passwordInput,"1234567890",{
-      delay: 100
+    const passwordInput = canvas.getByPlaceholderText("Enter your password");
+    await userEvent.type(passwordInput, "1234567890", {
+      delay: 100,
     });
-    const cfpasswordInput = canvas.getByPlaceholderText("Enter your comfirm password")
-    await userEvent.type(cfpasswordInput,"1234567890" ,{
-      delay: 100
+    const cfpasswordInput = canvas.getByPlaceholderText(
+      "Enter your comfirm password"
+    );
+    await userEvent.type(cfpasswordInput, "1234567890", {
+      delay: 100,
     });
-    const submitButton = canvas.getByRole("button")
-    await userEvent.click(submitButton)
-  }
-}
+    const submitButton = canvas.getByRole("button");
+    await userEvent.click(submitButton);
+  },
+  args: {
+    onRegister: (data) => {
+      console.log("Registering user:", data);
+      alert("User already exist")
+    },
+  },
+};

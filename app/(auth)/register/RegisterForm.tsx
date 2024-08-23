@@ -1,24 +1,37 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import TextField from '@/app/components/atoms/input/TextField'
 import Button from '@/app/components/atoms/button/Button'
 interface Inputs{
-  email: string;
-  password: string;
-  cfpassword: string;
+  onRegister : (data : {
+    email : string , password : string , cfpassword : string
+  }) => void
 }
-const RegisterForm = () => {
-  const handleSubmit = (e:React.FormEvent) => {
+const RegisterForm : React.FC <Inputs>= ({onRegister}) => {
+  const [email , setEmail ] = useState("")
+  const [password , setPassword ] = useState("")
+  const [cfpassword , setCfPassword ] = useState("")
+  const [error , setError] = useState <string | null > (null)
+  const [success , setSuccess] = useState (false)
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Hello");
-    
+    setError(null)
+    setSuccess(false)
+    if( !email || !password || !cfpassword){
+      setError("All field are required")
+      return;
+    }
+    onRegister({email,password,cfpassword})
+    setSuccess(true)
   }
   return (
     <>
       <form action="" onSubmit={handleSubmit}>
-        <TextField type='email' placeholder='Enter your email' label='email'/>
-        <TextField type='password' placeholder='Enter your password' label='password'/>
-        <TextField type='password' placeholder='Enter your comfirm password' label='comfirm password'/>
+        <TextField type='email' placeholder='Enter your email' label='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <TextField type='password' placeholder='Enter your password' label='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <TextField type='password' placeholder='Enter your comfirm password' label='comfirm password' value={cfpassword} onChange={(e) => setCfPassword(e.target.value)}/>
+        {error && <p className='text-red-500'>{error}</p> }
+        {success && <p className='text-blue-500'>Register success</p> }
         <Button type='submit'>
           Register
         </Button>
